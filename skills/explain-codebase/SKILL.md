@@ -41,7 +41,7 @@ Copy [progress.md](assets/templates/progress.md) to `PROGRESS.md` inside the sel
 
 Copy [coverage-ledger.md](assets/templates/coverage-ledger.md) to `reference/coverage.md` and [symbol-index.md](assets/templates/symbol-index.md) to `reference/symbol-index.md`.
 
-Inventory and classify every relevant file. Inventory every first-party symbol. Identify entry points, external boundaries, tests, configuration, and major workflows. Do not write architectural conclusions before this inventory exists.
+Run [inventory_repository.py](scripts/inventory_repository.py) from the skill directory against the target repository. Use its stable path list as the file-coverage baseline, then classify every file and inventory every first-party symbol. Identify entry points, external boundaries, tests, configuration, and major workflows. Do not write architectural conclusions before this inventory exists.
 
 ### 3. Design the reading path
 
@@ -61,6 +61,8 @@ Update the symbol index, glossary, coverage ledger, and progress checkpoint afte
 
 Rebuild the file and symbol inventories. Reconcile counts and links. Verify every entry point and major workflow. Check Markdown links, source references, placeholders, terminology, unsupported claims, contradictions, and first-party symbols without explanations.
 
+Run [check_guide.py](scripts/check_guide.py) with `--allow-incomplete` while drafting. Run it without that flag before completion and fix every error. Treat warnings as review items and record justified warnings in the guide.
+
 Read the guide in its stated order as a new programmer. Repair missing context, circular explanations, and unexplained jumps.
 
 ## Use the templates correctly
@@ -74,6 +76,8 @@ Template paths:
 - [guide-index.md](assets/templates/guide-index.md) and [module-guide.md](assets/templates/module-guide.md)
 - [workflow-guide.md](assets/templates/workflow-guide.md) and [symbol-index.md](assets/templates/symbol-index.md)
 - [coverage-ledger.md](assets/templates/coverage-ledger.md) and [progress.md](assets/templates/progress.md)
+
+Both scripts use only the Python standard library. Resolve script paths relative to this `SKILL.md`; do not assume the skill is installed inside the target repository.
 
 ## Work at repository scale
 

@@ -27,6 +27,8 @@ Keep entries in case-sensitive symbol-name order, then path order when names mat
 
 ## Dynamic and generated symbols
 
+Use this table for extra provenance. Also place a first-party dynamic or generated symbol in the main Symbols table so deterministic totals include it.
+
 | Symbol or registration | Origin | Runtime effect | Detailed explanation |
 | --- | --- | --- | --- |
 | `{{SYMBOL_OR_REGISTRATION}}` | {{DYNAMIC_OR_GENERATED_ORIGIN}} | {{EFFECT}} | [Open]({{DETAIL_LINK}}) |

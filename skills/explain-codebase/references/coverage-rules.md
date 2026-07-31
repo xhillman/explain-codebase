@@ -33,12 +33,14 @@ Exclude the selected guide output directory from repository coverage. The guide 
 Build a fresh inventory before writing architectural conclusions.
 
 1. Read repository instruction files and version-control ignore rules.
-2. List tracked files and relevant untracked first-party files within the user-approved scope.
+2. Run `scripts/inventory_repository.py` from the skill package with the target repository and guide directory. Use its output as the canonical path baseline.
 3. Open each file or inspect it with a format-aware tool before final classification.
 4. Identify entry points, registrations, manifests, build definitions, tests, schemas, infrastructure, and external boundaries.
 5. Record the result in `reference/coverage.md` using `assets/templates/coverage-ledger.md`.
 
 Use deterministic repository-relative path ordering. If the repository contains nested projects, identify each project root and its relationship to the others.
+
+Record the source identity before drafting the guide. When Git metadata is available, record the full commit hash and whether the working tree differs from that commit. When Git metadata is unavailable, write `unversioned filesystem snapshot`, record the inspection date, and store a checksum for every inventoried file in `reference/verification.md`. Never invent a revision or imply that an unversioned snapshot is reproducible without the checksums.
 
 Record binary and unreadable files. Explain their apparent role from callers, metadata, or generating configuration. Mark unsupported inspection as an uncertainty instead of pretending to have read the content.
 
@@ -58,7 +60,13 @@ Do not count imported third-party symbols as first-party declarations. Do count 
 
 For languages with overloads, partial classes, extensions, implementations, or declaration/definition pairs, create one conceptual index entry and link every source location.
 
+Count each conceptual first-party symbol once. Assign a multi-location symbol to one primary owner file in the coverage ledger, and record zero additional symbols for its secondary declaration or implementation locations. This makes ledger totals match the main symbol-index table without losing source links.
+
 For dynamic languages, record discoverable runtime registrations and monkey patches even when no conventional declaration exists.
+
+Count compiler- or framework-generated behavior as a conceptual first-party symbol only when repository code constructs it, calls it, overrides it, or depends on its contract. Assign the symbol to the first-party declaration that causes generation, label the behavior as generated, and explain the effective contract without pretending the generated implementation appears in the source.
+
+Count runtime setup as a conceptual symbol when it changes execution or control flow. Examples include main guards, decorator-based registrations, route and command registrations, import-path mutation, startup hooks, and module-level registration calls. Use the smallest source range that defines the behavior and label the entry by its runtime role when no declared symbol name exists.
 
 ## Coverage ledger
 
@@ -111,5 +119,7 @@ Run a fresh audit after drafting the guide:
 3. Confirm each detailed first-party file has a verified guide link.
 4. Confirm each summary-only row has an allowed classification and a specific reason.
 5. Confirm totals, links, and status labels reconcile with no hidden omissions.
+
+Run `scripts/check_guide.py` from the skill package without `--allow-incomplete`. Fix every error. Review each warning and record any justified remaining uncertainty in the guide.
 
 Do not declare completion with `not-started`, `drafted`, or unexplained `blocked` first-party rows. Do not use “and so on,” “similar,” or placeholders to satisfy coverage.
