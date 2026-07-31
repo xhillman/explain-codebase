@@ -1,0 +1,4 @@
+interface:
+  display_name: "Explain Codebase"
+  short_description: "Build complete beginner-friendly codebase guides"
+  default_prompt: "Use $explain-codebase to create a complete beginner-friendly walkthrough of this repository."
